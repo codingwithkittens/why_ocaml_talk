@@ -1,0 +1,62 @@
+OCaml is unpopular - hit not at all or hit it funnier
+One of the few commercial users
+
+There are requirements we have for the software
+-correctness
+-agility
+-performance
+
+Hit the correctness -scariness point harder
+Emote more about all the problems section
+	- every strategy is constantly going away
+	
+For the correctness slide - talk without bullets
+
+15 Gbps - Your home connection might be 10Mb maybe 50 if you have a really nice system
+
+Performance -- 
+This matters for lots of things 
+
+Busier times are when we make the most money and when it's most important to be fast
+this is not the biggest data problem (nothing on the size of fb or goog, but we need to respond quickly)
+ - both r/t and historical
+
+The ability to process 5mil msgs/sec is important both for real time
+and to look at historical data for years
+
+
+Make sure to go slowly through code, apologize about confusing and really push them to ask questions
+
+Code is read, changed and used wayyy more often than it's written
+Spend more time on this 
+
+Null ptr exceptions just do not happen in OCaml
+
+different languages are different 
+- they effect how you think about and approach probles
+
+Clean up why does this matter
+
+
+
+
+
+
+
+
+Talk a bit more about my background at the beginning
+- where I went to school, how I came to jane street, what I do here
+- please ask question during the talk if things are unclear
+
+Agiility slide - mention innovation on the slide and 
+Talk about innovation and new ideas before explain adr/ord example
+
+
+Present why this matters in the introduction
+
+
+
+we have a very small number of developers.  Twitter has 2k developers for... twitter There is a ton of complexity  of 2% of us equity volume with 100 devs
+Different languages are different
+They make different kinds of problems easier to solve
+They change how you think and approach problems

@@ -1,0 +1,9 @@
+(jbuild_version 1)
+
+(executables (
+    (names (
+       z
+    ))
+    (libraries (core))
+(flags (:standard -short-paths))
+))

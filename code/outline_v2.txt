@@ -1,0 +1,100 @@
+0. Poll 
+  - How many people have written code?
+  - What languages? Java? Python?
+  - How many people have heard of OCaml?
+
+I. OCaml is an incredibly unpopular language.  The goal of this talk is to explain a bit about
+the problems we're trying to solve and why we think that OCaml does a very good job of solving them.
+I'm going to aim this talk so that hopefully it will be accessible even if you haven't written any
+code so please stop me at any time if you have questions.
+
+II. What problems are we trying to solve
+  1. Correctness - 
+    We're trading very fast (on the order of us).  The fastest way to go out of business is to do the 
+    same stupid thing over and over in a tight loop
+  2. Agility -
+    Things change very fast in the world
+      - New places to trade 
+      - Old places change/upgrade their protocols
+      - New regulations come out
+      - Want to trade new products
+    Being able to quickly build and roll new systems is vital to get things done.  Almost all of 
+    our ability to do things is limited by having enough humans to get things up and running.
+    The easier it is to add and change code quickly is super important, but it's also important to 
+    make your systems easily maintainable.  
+    If there is a system that's hard to read/reason about then supporting and changing the system
+    take up lots more time that prevents people from adding new things we want to do.
+  3. Performance
+      - We take in vast amounts of market data - 2.5 TB per day, 15 Gbps 
+      - We Turn that market data in to a trading decision (buy, sell, cancel existing orders) in micro seconds
+      - We output ~200_000_000 msgs per day (average of 10_000 msgs/s with spikes 5x that)
+
+III. How does OCaml help us
+  1. Correctness -
+    a. To demontrate this I'm going to explain one of the very useful language features of OCaml, Algebraic Data Types.
+    There are two kinds of types you can talk about - product types and sum types
+    product tyoes are tuples (a, b, c) or records { a: int; b : string}
+    Sum types are ors | A of int | B of float | C of string
+      (Quick aside: Why are they called sums and products : 
+          Suppose you have two types one that can take on values a,b,c,d,e (5 values) and the other than can 
+          take values x,y,z (3 values)
+          if you put them into a sum type | A of (a,b,c,d,e) | X of (x,y,z) the resulting type can take on 8 values.
+          if you put them into a product type (A,B) the resulting type can have 5 * 3 = 15 values)
+
+        - Very few languages have Sum types easily usuable in a first class way.
+        - They're very good for Case analysis
+        - match statements allow for an easy way to read and write them and they give a bunch of 
+        checks *At compile time*
+          - Missed cases
+          - Redundant cases
+          - Impossible cases
+          (Pull up adt_example.ml)
+        - These help not just on writing the code for the first time, but especially on changing it later!!
+          (Add Cancel message)
+     b. By using the type system in this way, the compiler can catch a lot of mistakes for you when you update your code.
+     We can rely on the type system to make us way more confident that we have avoided several large classes of mistakes.
+       - | Some _ or None  
+          - get rid of Null ptr exceptions 
+          - Show some kind of lookup that returns Some or None if nothing found
+    2. Agililty -
+      a. A common problem that many of the typical languages people use in finance (C++, Java, VBA, etc) have 
+      is they are very verbose and have a lot of boilerplate (* Explain boilerplate or come up with another word *)
+      code.  -- The languages are so verbose that they have to have ide's to autogenerate tons of repetitve code for you
+        - This is very bad because it's worse to write, but it's also really a lot worse to read.  
+        Pull up expr.ml vs expr.java
+        - boilerplate obscures the interesting changes in code in code making it much harder to spot mistakes
+      b. Let's take a second digression into useful OCaml features that help us deal with this problem: Higher order functions
+        (math.ml)
+      c. By using these higher order functions we can pull out the common parts of functions to make things easier to read
+      and make it easier to see mistakes
+        (* I swear you showed me an example where refactoring caused the bug to become super obvious, but I don't think
+        it was one of the examples you sent me.  The one with bid size and ask size *)
+    3. Performance
+      a. Ocaml sits in a nice sweet spot of languages.  It has lots of higher order language features which make it easy to 
+      write the code, and the compiler is quite good, so the straight forward code is pretty performant.  
+      b. what's more if you wnat to write really fast OCaml code it's possible though there are some nice language features 
+      you need to give up to make it happen
+        - type system is pretty good at catching errors while still being reasonably readable
+        - can write straight forward code and the performance is still easy to reason about
+
+IV. Where are the areas that OCaml has problems
+  1. Very few other large users (facebook [1/4 of code in facebook messenger is OCaml] and bloomberg being the notable exceptions), but most of libraries we want to use
+  we've written in house ourselves.  This includes not just re-writing the standard library and tons of other things
+  that would have been solved problems in other languages (Async, Rpc, Incr_dom, Incremental) it also includes work we've
+  put into the compiler and the dev environment that other languages would have had nice setups ready to go
+  2. UI's - coupled with a lack of other users, there aren't nice libraries for builidng nice uis.  Most of the ui's we 
+  use we build on top of ncurses 
+  (* sanity check nothing in curses_ui will make us sad *)
+  (show curses_ui.png) 
+  We've started working some with Js_of_ocaml and web-ui's but that still has a ways to go before it's the norm at
+  the firm and again it was something we had to write ourselves
+
+V. Wrapup 
+  - Learning to program is incredibly useful for a wide variety of pursiuts, and you should learn to do it even if you
+  don't plan on going into cs.  It's useful in lots of the sciences, and even outside them.
+  - Learning to program in different languages is helpful because it shapes the way that you think about problems
+  and the ways that you can approach them.  
+  - Learing to program also teaches you to think about things carefully and in great detail which will be useful to you
+  in whatever endeavors you choose to follow.
+
+VI. Questions?
